@@ -229,16 +229,10 @@ end
 --- Called when player creates a blueprint - we save config to blueprint tags
 --- @param event EventData.on_player_setup_blueprint
 function control.on_player_setup_blueprint(event)
-    local player = game.get_player(event.player_index)
-    if not player or not player.valid then return end
 
     -- Get the blueprint item stack
-    local bp = player.blueprint_to_setup
-    if not bp or not bp.valid_for_read then
-        bp = player.cursor_stack
-    end
-
-    if not bp or not bp.valid_for_read then return end
+    local bp = event.record or event.stack
+    if not bp then return end
 
     -- Get blueprint entities
     local entities = bp.get_blueprint_entities()
